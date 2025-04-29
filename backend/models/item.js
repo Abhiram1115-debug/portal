@@ -5,7 +5,7 @@ const itemSchema = new mongoose.Schema({
   description: { type: String, required: true },
   contactDetails: {
     email: { type: String, required: true },
-    phone: { type: String }
+    // phone: { type: String }
   },
   category: { type: String, enum: ['lost', 'found'], required: true },
   status: { type: String, enum: ['pending', 'approved', 'claimed'], default: 'pending' },
