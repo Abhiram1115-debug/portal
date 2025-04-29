@@ -1,23 +1,23 @@
-const express = require('express');
-const itemController = require('../controllers/itemController');
-const authMiddleware = require('../middleware/authMiddleware');
-const uploadMiddleware = require('../middleware/uploadMiddleware');
-const router = express.Router();
+import { Router } from 'express';
+import { getApprovedItems, addItem, approveItem, claimItem, deleteItem } from '../controllers/itemController.js';
+import { protect, adminOnly } from '../middleware/authMiddleware.js';
+import { single } from '../middleware/uploadMiddleware.js';
+const router = Router();
 
 // Get all approved items
-router.get('/', itemController.getApprovedItems);
+router.get('/', getApprovedItems);
 
 // Add a new item (login required)
-router.post('/add', authMiddleware, uploadMiddleware.single('image'), itemController.addItem);
+router.post('/add', protect, single('image'), addItem);
 
 // Approve an item (admin work)
-router.put('/approve/:id', authMiddleware, itemController.approveItem);
+router.put('/approve/:id', protect, adminOnly, approveItem);
 
 // Mark item as claimed
-router.put('/claim/:id', authMiddleware, itemController.claimItem);
+router.put('/claim/:id', protect, claimItem);
 
 // Delete an item
-router.delete('/delete/:id', authMiddleware, itemController.deleteItem);
+router.delete('/delete/:id', protect, deleteItem);
 
-module.exports = router;
+export default router;
         
