@@ -1,16 +1,21 @@
 // Import core packages
-const express = require('express');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const path = require('path'); // Import path for static file serving
+import express from 'express';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Import routes
-const authRoutes = require('./routes/authRoutes');
-const itemRoutes = require('./routes/itemRoutes');
+import authRoutes from './routes/authRoutes.js';
+import itemRoutes from './routes/itemRoutes.js';
 
 // Initialize express app
 const app = express();
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
 dotenv.config();
