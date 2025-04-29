@@ -1,24 +1,26 @@
 import Item from '../models/item.js';
 
 // Add new item
-export async function addItem(req, res) {
-  try {
-    const { imageUrl, description, contactDetails, category } = req.body;
+  export async function addItem(req, res) {
+    try {
+      const { imageUrl, description, contactDetails, category } = req.body;
 
-    const newItem = new Item({
-      imageUrl,
-      description,
-      contactDetails,
-      category,
-      createdBy: req.user.id,
-    });
+      const newItem = new Item({
+        imageUrl,
+        description,
+        contactDetails,
+        category,
+        createdBy: req.user.id,
+      });
 
-    await newItem.save();
-    res.status(201).json({ message: 'Item submitted for approval' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error adding item' });
+
+      await newItem.save();
+      res.status(201).json({ message: 'Item submitted for approval' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error adding item' });
+    }
   }
-}
 
 // Get all approved items
 export async function getApprovedItems(req, res) {
