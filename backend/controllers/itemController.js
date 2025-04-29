@@ -1,7 +1,7 @@
-const Item = require('../models/item');
+import Item from '../models/item.js';
 
 // Add new item
-exports.addItem = async (req, res) => {
+export async function addItem(req, res) {
   try {
     const { imageUrl, description, contactDetails, category } = req.body;
 
@@ -18,20 +18,20 @@ exports.addItem = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error adding item' });
   }
-};
+}
 
 // Get all approved items
-exports.getApprovedItems = async (req, res) => {
+export async function getApprovedItems(req, res) {
   try {
     const items = await Item.find({ status: 'approved' });
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching items' });
   }
-};
+}
 
 // Approve an item
-exports.approveItem = async (req, res) => {
+export async function approveItem(req, res) {
   try {
     const item = await Item.findById(req.params.id);
     if (!item) return res.status(404).json({ message: 'Item not found' });
@@ -43,10 +43,10 @@ exports.approveItem = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error approving item' });
   }
-};
+}
 
 // Mark item as claimed
-exports.claimItem = async (req, res) => {
+export async function claimItem(req, res) {
   try {
     const item = await Item.findById(req.params.id);
     if (!item) return res.status(404).json({ message: 'Item not found' });
@@ -58,10 +58,10 @@ exports.claimItem = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error marking item claimed' });
   }
-};
+}
 
 // Delete an item
-exports.deleteItem = async (req, res) => {
+export async function deleteItem(req, res) {
   try {
     const item = await Item.findByIdAndDelete(req.params.id);
     if (!item) return res.status(404).json({ message: 'Item not found' });
@@ -70,4 +70,4 @@ exports.deleteItem = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Error deleting item' });
   }
-};
+}
